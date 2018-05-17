@@ -12,14 +12,19 @@ const server = express()
 
 const wss = new SocketServer({server});
 
+
 wss.on('connection', (ws) => {
-  console.log("Client connected:", wss.clients.size)
-  
+
   wss.clients.forEach(function each(client) {
-    client.send({clients: wss.clients.size}) })
+    client.send( JSON.stringify({clients: wss.clients.size}) )
+  });
 
-
-  wss.on('close', () => {console.log("Disconnected.")})
+  ws.on('close', () => {
+    console.log("yo")
+    wss.clients.forEach(function each(client) {
+      client.send( JSON.stringify({clients: wss.clients.size}) )
+      })
+    })
 
   ws.on('message', function incoming(data) {
     const parsedData = JSON.parse(data)
@@ -34,16 +39,16 @@ wss.on('connection', (ws) => {
       wss.clients.forEach(function each(client) {
         client.send(JSON.stringify(message)) })
 
-    // if data is a notification
-    } else if (parsedData.type === 'postNotification') {
+        // if data is a notification
+      } else if (parsedData.type === 'postNotification') {
 
-      parsedData.type = 'incomingNotification'
-      parsedData.id = UUID()
+        parsedData.type = 'incomingNotification'
+        parsedData.id = UUID()
 
 
-      wss.clients.forEach(function each(client) {
-        client.send(JSON.stringify(parsedData)) })
-    }
+        wss.clients.forEach(function each(client) {
+          client.send(JSON.stringify(parsedData)) })
+     }
   })
 
 });

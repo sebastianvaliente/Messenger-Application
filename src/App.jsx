@@ -16,12 +16,21 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+
+    // console.log(this.state.clients)
+
     this.socket = new WebSocket('ws://localhost:8080')
 
     this.socket.onmessage = (event) => {
       let parsedData = JSON.parse(event.data)
-      this.receiveMessageAndUpdateState(parsedData)
+      if (parsedData.id) {
+        this.receiveMessageAndUpdateState(parsedData)
+      } else if (parsedData.clients) {
+        console.log(this.state.clients)
+        this.setState({clients: parsedData.clients})
+      }
     }
+
 
   }
 
@@ -68,7 +77,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar users={this.state.clients}/>
         <MessageList messages={this.state.messages} />
         <ChatBar user={this.state.currentUser.name} sendMessageToServer={this.sendMessageToServer} sendUserToServer={this.sendUserToServer}/>
       </div>

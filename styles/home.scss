@@ -70,6 +70,11 @@ body {
       position: fixed;
       right: 0;
       top: 0;
+
+        p {
+          float: right;
+          margin-top: 20px;
+        }
     }
 
     .navbar-brand {
