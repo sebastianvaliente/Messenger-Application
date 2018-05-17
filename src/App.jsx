@@ -14,20 +14,29 @@ class App extends Component {
     }
   }
 
+
+
   componentDidMount() {
     console.log("componentDidMount <App />");
 
-    // console.log(this.state.clients)
+
+    // console.log(this.state.currentUser)
 
     this.socket = new WebSocket('ws://localhost:8080')
 
     this.socket.onmessage = (event) => {
       let parsedData = JSON.parse(event.data)
+
+      // if message is sent
       if (parsedData.id) {
         this.receiveMessageAndUpdateState(parsedData)
+      // if user is changed
       } else if (parsedData.clients) {
-        console.log(this.state.clients)
-        this.setState({clients: parsedData.clients})
+        this.setState({
+          currentUser: {
+            name: this.state.currentUser.name,
+            color: parsedData.clientColor},
+          clients: parsedData.clients })
       }
     }
 
@@ -37,6 +46,8 @@ class App extends Component {
 
   sendMessageToServer = (data) => {
     const message = {
+      username: this.state.currentUser.name,
+      usercolor: this.state.currentUser.color,
       text: data,
       type: 'postMessage'
     }
@@ -53,15 +64,15 @@ class App extends Component {
         newUser: user
       }
       this.socket.send(JSON.stringify(postNotification))
-      this.setState( {currentUser: {name: user}} )
+      this.setState( {currentUser: {name: user, color: this.state.currentUser.color}} )
     }
   }
 
   receiveMessageAndUpdateState = (message) => {
-
     if (message.type === 'incomingMessage') {
       const update = {
-        username: this.state.currentUser.name,
+        username: message.username,
+        usercolor: message.usercolor,
         content: message.text,
         id: message.id,
         type: message.type
@@ -78,7 +89,7 @@ class App extends Component {
     return (
       <div>
         <Navbar users={this.state.clients}/>
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} userColor={this.state.currentUser.color} />
         <ChatBar user={this.state.currentUser.name} sendMessageToServer={this.sendMessageToServer} sendUserToServer={this.sendUserToServer}/>
       </div>
     );

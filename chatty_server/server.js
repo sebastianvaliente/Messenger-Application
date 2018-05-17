@@ -9,18 +9,23 @@ const server = express()
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => {console.log(`Listening on ${PORT}`)})
 
-
 const wss = new SocketServer({server});
 
+const colors = ['red', 'blue', 'green', 'purple'];
+let colorIndex = -1
 
 wss.on('connection', (ws) => {
 
+
   wss.clients.forEach(function each(client) {
-    client.send( JSON.stringify({clients: wss.clients.size}) )
+    if (colorIndex == 3) {
+      colorIndex = 0
+    }
+    colorIndex += 1
+    client.send( JSON.stringify({clients: wss.clients.size, clientColor: colors[colorIndex]}) )
   });
 
   ws.on('close', () => {
-    console.log("yo")
     wss.clients.forEach(function each(client) {
       client.send( JSON.stringify({clients: wss.clients.size}) )
       })
@@ -31,8 +36,11 @@ wss.on('connection', (ws) => {
 
     // if data is a message
     if (parsedData.type === 'postMessage') {
+      // console.log(parsedData.usercolor)
       const message = {
         id: UUID(),
+        username: parsedData.username,
+        usercolor: parsedData.usercolor,
         text: parsedData.text,
         type: 'incomingMessage'
       }
