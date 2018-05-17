@@ -13,13 +13,17 @@ const server = express()
 const wss = new SocketServer({server});
 
 wss.on('connection', (ws) => {
-  console.log("Client connected.")
+  console.log("Client connected:", wss.clients.size)
+  
+  wss.clients.forEach(function each(client) {
+    client.send({clients: wss.clients.size}) })
 
 
   wss.on('close', () => {console.log("Disconnected.")})
 
   ws.on('message', function incoming(data) {
     const parsedData = JSON.parse(data)
+
     // if data is a message
     if (parsedData.type === 'postMessage') {
       const message = {
