@@ -6,10 +6,8 @@ function Message(props) {
       <div className="message">
           <span className="message-username">{props.data.username}</span>
           <span className="message-content">{props.data.content}</span>
-        </div>
-        <div className="message system">
-        </div>
-    </div>
+      </div>
+   </div>
   )
 }
 
