@@ -21,6 +21,7 @@ Multiple clients can connect to a local host and talk to each other in real time
 ### Examples
 
 ![Alt text](https://github.com/sebastianvaliente/Messenger-Application/blob/master/stage1.PNG?raw=true)
+![Alt-text](https://github.com/sebastianvaliente/Messenger-Application/blob/master/stage2.PNG?raw=true)
 
 
 ### Dependencies
