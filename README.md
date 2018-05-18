@@ -20,7 +20,9 @@ Multiple clients can connect to a local host and talk to each other in real time
 
 ### Examples
 
-
+![Screenshot](stage1.png)
+![Screenshot](stage2.png)
+![Screenshot](stage3.png)
 
 ### Dependencies
 
