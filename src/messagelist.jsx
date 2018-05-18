@@ -4,6 +4,7 @@ import Notifications from './notifs.jsx'
 
 function MessageList(props) {
 
+  // depending on the message 'type', it will be rendered differently
   const messages = props.messages.map((data) => {
     if (data.type === 'incomingMessage') {
       return <Message data={data} key={data.id} userColor={data.usercolor}/>
