@@ -19,9 +19,6 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
 
-
-    // console.log(this.state.currentUser)
-
     this.socket = new WebSocket('ws://localhost:8080')
 
     this.socket.onmessage = (event) => {

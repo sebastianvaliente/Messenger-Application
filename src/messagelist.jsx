@@ -12,7 +12,6 @@ function MessageList(props) {
     }
   })
 
-
   return (
     <div>
       <div>
