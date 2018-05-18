@@ -20,9 +20,9 @@ Multiple clients can connect to a local host and talk to each other in real time
 
 ### Examples
 
-![Screenshot](stage 1.PNG)
-![Screenshot](stage 2.PNG)
-![Screenshot](stage 3.PNG)
+![Screenshot](Messenger-Application/stage 1.PNG)
+![Screenshot](Messenger-Application/stage 1.PNG)
+![Screenshot](Messenger-Application/stage 1.PNG)
 
 ### Dependencies
 
